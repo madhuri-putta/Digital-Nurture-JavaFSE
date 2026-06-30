@@ -1,19 +1,19 @@
 -- ==========================================
--- Exercise 3 : Stored Procedures
+-- Module 3 - Exercise 3 : Stored Procedures
 -- ==========================================
 
----------------------------------------------------
+---------------------------------------------------------
 -- Scenario 1
 -- Process Monthly Interest
----------------------------------------------------
+---------------------------------------------------------
 
 CREATE OR REPLACE PROCEDURE ProcessMonthlyInterest
 IS
 BEGIN
 
     UPDATE Accounts
-    SET Balance = Balance + (Balance*0.01)
-    WHERE AccountType='Savings';
+    SET Balance = Balance + (Balance * 0.01)
+    WHERE AccountType = 'Savings';
 
     COMMIT;
 
@@ -25,12 +25,13 @@ BEGIN
 END;
 /
 
+-- Verify
 SELECT * FROM Accounts;
 
----------------------------------------------------
+---------------------------------------------------------
 -- Scenario 2
 -- Transfer Funds
----------------------------------------------------
+---------------------------------------------------------
 
 CREATE OR REPLACE PROCEDURE TransferFunds
 (
@@ -42,12 +43,12 @@ IS
 BEGIN
 
     UPDATE Accounts
-    SET Balance=Balance-p_Amount
-    WHERE AccountID=p_FromAccount;
+    SET Balance = Balance - p_Amount
+    WHERE AccountID = p_FromAccount;
 
     UPDATE Accounts
-    SET Balance=Balance+p_Amount
-    WHERE AccountID=p_ToAccount;
+    SET Balance = Balance + p_Amount
+    WHERE AccountID = p_ToAccount;
 
     COMMIT;
 
@@ -55,16 +56,17 @@ END;
 /
 
 BEGIN
-    TransferFunds(1,4,500);
+    TransferFunds(1, 4, 500);
 END;
 /
 
+-- Verify
 SELECT * FROM Accounts;
 
----------------------------------------------------
+---------------------------------------------------------
 -- Scenario 3
 -- Add Customer
----------------------------------------------------
+---------------------------------------------------------
 
 CREATE OR REPLACE PROCEDURE AddCustomer
 (
@@ -109,10 +111,11 @@ BEGIN
 END;
 /
 
+-- Verify
 SELECT * FROM Customers;
 
--- Optional cleanup after taking screenshot
+-- Optional Cleanup
 DELETE FROM Customers
-WHERE CustomerID=5;
+WHERE CustomerID = 5;
 
 COMMIT;
